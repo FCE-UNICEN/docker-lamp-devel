@@ -14,4 +14,7 @@ else
     echo "=> Using an existing volume of MySQL"
 fi
 
+echo "=> Installing or updating pasquino"
+/init-pasquino.sh
+
 exec supervisord -n
