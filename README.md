@@ -12,8 +12,13 @@ poné la pava para el mate....
 ### Use your image runing a container
 ```bash
 docker run -i -t -P --name myapp -v /home/me/workspace/myapp/:/var/www/html/ asivas/pqn
--P map all exported ports
--i 
+```
+
+```
+-P     map all exported ports
+-i     (interctavice) Keep STDIN open even if not attached
+-t     Allocate a pseudo-TTY
+-v     Bind mount a volume
 ```
 
 ### Start using your container
