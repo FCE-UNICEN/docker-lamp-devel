@@ -12,7 +12,9 @@ poné la pava para el mate....
 ### Use your image runing a container
 ```bash
 docker run -i -t -P --name myapp -v /home/me/workspace/myapp/:/var/www/html/ asivas/pqn
+
 ```
+Is important to run interactive first time, because pasquino installs on first run and it has 4 stages that require interaction
 
 ```
 -P     map all exported ports
