@@ -1,10 +1,10 @@
-FROM ubuntu:trusty
+FROM ubuntu:latest
 MAINTAINER Lucas Vidaguren <lucas.vidaguren@asivas.com.ar>
 
 # Install packages
 RUN apt-get update
-#RUN apt-get -y install locales curl supervisor apache2 libapache2-mod-php5 mysql-server php5-mysql pwgen php5-mcrypt php5-gd php5-curl php5-xmlrpc php5-intl phpmyadmin git
-RUN apt-get -y install supervisor lamp-server^ php5-gd php5-curl php5-xdebug git phpmyadmin
+#RUN apt-get -y install locales curl supervisor apache2 libapache2-mod-php5 mysql-server php-mysql pwgen php-mcrypt php-gd php-curl php-xmlrpc php-intl git v
+RUN apt-get -y install supervisor lamp-server^ php-gd php-curl php-xdebug git vim
 
 # Add image configuration and scripts
 ADD apache/start-apache2.sh /start-apache2.sh
@@ -47,5 +47,5 @@ RUN dpkg-reconfigure locales
 #Configure PHP.ini
 RUN /configure-php.sh
 
-EXPOSE 81 3306
+EXPOSE 80 3306
 CMD ["/run.sh"]
