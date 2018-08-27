@@ -1,8 +1,12 @@
 FROM ubuntu:latest
 MAINTAINER Lucas Vidaguren <lucas.vidaguren@asivas.com.ar>
 
-# Install packages
 RUN apt-get update
+
+RUN apt-get -y install tzdata
+RUN echo "America/Argentina/Buenos_Aires" > /etc/timezone
+RUN dpkg-reconfigure -f noninteractive tzdata
+# Install packages
 #RUN apt-get -y install locales curl supervisor apache2 libapache2-mod-php5 mysql-server php-mysql pwgen php-mcrypt php-gd php-curl php-xmlrpc php-intl git v
 RUN apt-get -y install supervisor lamp-server^ php-gd php-curl php-xdebug git vim
 
@@ -40,9 +44,9 @@ ENV PHP_POST_MAX_SIZE 20M
 VOLUME ["/etc/mysql", "/var/lib/mysql" ]
 
 # Configure locales
-RUN locale-gen en_US en_US.UTF-8
-RUN locale-gen es_AR es_AR.UTF-8
-RUN dpkg-reconfigure locales
+#RUN locale-gen en_US en_US.UTF-8
+#RUN locale-gen es_AR es_AR.UTF-8
+#RUN dpkg-reconfigure locales
 
 #Configure PHP.ini
 RUN /configure-php.sh
