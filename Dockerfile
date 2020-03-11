@@ -4,7 +4,7 @@ MAINTAINER Lucas Vidaguren <lucas.vidaguren@asivas.com.ar>
 # Install packages
 RUN apt-get update
 #RUN apt-get -y install locales curl supervisor apache2 libapache2-mod-php5 mysql-server php5-mysql pwgen php5-mcrypt php5-gd php5-curl php5-xmlrpc php5-intl phpmyadmin git
-RUN apt-get -y install supervisor lamp-server^ php5-gd php5-curl php5-xdebug git phpmyadmin
+RUN apt-get -y install supervisor lamp-server^ php5-gd php5-curl php5-xdebug git phpmyadmin vim
 
 # Add image configuration and scripts
 ADD apache/start-apache2.sh /start-apache2.sh
@@ -16,14 +16,13 @@ ADD mysql/my.cnf /etc/mysql/conf.d/my.cnf
 ADD apache/supervisord-apache2.conf /etc/supervisor/conf.d/supervisord-apache2.conf
 ADD mysql/supervisord-mysqld.conf /etc/supervisor/conf.d/supervisord-mysqld.conf
 
-# Remove pre-installed database
-RUN rm -rf /var/lib/mysql/*
-
 # Add MySQL utils
 ADD mysql/create_mysql_admin_user.sh /create_mysql_admin_user.sh
+ADD mysql/init-db.sh /init-db.sh
 
 # Add Pasquino Install utils
 ADD pasquino/get-pasquino.sh /init-pasquino.sh
+
 
 RUN chmod 755 /*.sh
 
@@ -47,5 +46,5 @@ RUN dpkg-reconfigure locales
 #Configure PHP.ini
 RUN /configure-php.sh
 
-EXPOSE 81 3306
+EXPOSE 80 3306
 CMD ["/run.sh"]

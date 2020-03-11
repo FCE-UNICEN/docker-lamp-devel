@@ -17,4 +17,9 @@ fi
 echo "=> Installing or updating pasquino"
 /init-pasquino.sh
 
+if [[ -f /var/www/app/init.sql ]]; then
+	/init-db.sh
+fi
+
+
 exec supervisord -n
