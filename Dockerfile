@@ -2,6 +2,7 @@ FROM ubuntu:latest
 MAINTAINER Lucas Vidaguren <lucas.vidaguren@asivas.com.ar>
 
 RUN apt-get update
+<<<<<<< HEAD
 
 RUN apt-get -y install tzdata
 RUN echo "America/Argentina/Buenos_Aires" > /etc/timezone
@@ -9,6 +10,10 @@ RUN dpkg-reconfigure -f noninteractive tzdata
 # Install packages
 #RUN apt-get -y install locales curl supervisor apache2 libapache2-mod-php5 mysql-server php-mysql pwgen php-mcrypt php-gd php-curl php-xmlrpc php-intl git v
 RUN apt-get -y install supervisor lamp-server^ php-gd php-curl php-xdebug git vim
+=======
+#RUN apt-get -y install locales curl supervisor apache2 libapache2-mod-php5 mysql-server php5-mysql pwgen php5-mcrypt php5-gd php5-curl php5-xmlrpc php5-intl phpmyadmin git
+RUN apt-get -y install supervisor lamp-server^ php5-gd php5-curl php5-xdebug git phpmyadmin vim
+>>>>>>> pasquino
 
 # Add image configuration and scripts
 ADD apache/start-apache2.sh /start-apache2.sh
@@ -20,14 +25,13 @@ ADD mysql/my.cnf /etc/mysql/conf.d/my.cnf
 ADD apache/supervisord-apache2.conf /etc/supervisor/conf.d/supervisord-apache2.conf
 ADD mysql/supervisord-mysqld.conf /etc/supervisor/conf.d/supervisord-mysqld.conf
 
-# Remove pre-installed database
-RUN rm -rf /var/lib/mysql/*
-
 # Add MySQL utils
 ADD mysql/create_mysql_admin_user.sh /create_mysql_admin_user.sh
+ADD mysql/init-db.sh /init-db.sh
 
 # Add Pasquino Install utils
 ADD pasquino/get-pasquino.sh /init-pasquino.sh
+
 
 RUN chmod 755 /*.sh
 
