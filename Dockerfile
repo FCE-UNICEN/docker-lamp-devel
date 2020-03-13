@@ -2,18 +2,12 @@ FROM ubuntu:latest
 MAINTAINER Lucas Vidaguren <lucas.vidaguren@asivas.com.ar>
 
 RUN apt-get update
-<<<<<<< HEAD
 
 RUN apt-get -y install tzdata
 RUN echo "America/Argentina/Buenos_Aires" > /etc/timezone
 RUN dpkg-reconfigure -f noninteractive tzdata
 # Install packages
-#RUN apt-get -y install locales curl supervisor apache2 libapache2-mod-php5 mysql-server php-mysql pwgen php-mcrypt php-gd php-curl php-xmlrpc php-intl git v
-RUN apt-get -y install supervisor lamp-server^ php-gd php-curl php-xdebug git vim
-=======
-#RUN apt-get -y install locales curl supervisor apache2 libapache2-mod-php5 mysql-server php5-mysql pwgen php5-mcrypt php5-gd php5-curl php5-xmlrpc php5-intl phpmyadmin git
-RUN apt-get -y install supervisor lamp-server^ php5-gd php5-curl php5-xdebug git phpmyadmin vim
->>>>>>> pasquino
+RUN apt-get -y install supervisor lamp-server^ php-gd php-curl php-xdebug git phpmyadmin vim
 
 # Add image configuration and scripts
 ADD apache/start-apache2.sh /start-apache2.sh
