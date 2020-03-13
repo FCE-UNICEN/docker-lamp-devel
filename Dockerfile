@@ -3,11 +3,14 @@ MAINTAINER Lucas Vidaguren <lucas.vidaguren@asivas.com.ar>
 
 RUN apt-get update
 
+ENV DEBIAN_FRONTEND=noninteractive
+
 RUN apt-get -y install tzdata
-RUN echo "America/Argentina/Buenos_Aires" > /etc/timezone
-RUN dpkg-reconfigure -f noninteractive tzdata
+RUN ln -s /usr/share/zoneinfo/America/Argentina/Buenos_Aires /etc/localtime
+RUN dpkg-reconfigure tzdata
 # Install packages
-RUN apt-get -y install supervisor lamp-server^ php-gd php-curl php-xdebug git phpmyadmin vim
+RUN apt-get -y install supervisor lamp-server^ php-gd php-curl php-xdebug git vim
+RUN apt install -y phpmyadmin php-mbstring php-gettext
 
 # Add image configuration and scripts
 ADD apache/start-apache2.sh /start-apache2.sh
@@ -25,7 +28,6 @@ ADD mysql/init-db.sh /init-db.sh
 
 # Add Pasquino Install utils
 ADD pasquino/get-pasquino.sh /init-pasquino.sh
-
 
 RUN chmod 755 /*.sh
 
