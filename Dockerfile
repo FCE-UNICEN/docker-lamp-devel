@@ -6,7 +6,7 @@ RUN apt-get update
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get -y install tzdata
-RUN ln -s /usr/share/zoneinfo/America/Argentina/Buenos_Aires /etc/localtime
+RUN ln -s -f /usr/share/zoneinfo/America/Argentina/Buenos_Aires /etc/localtime
 RUN dpkg-reconfigure tzdata
 # Install packages
 RUN apt-get -y install supervisor lamp-server^ php-gd php-curl php-xdebug git vim

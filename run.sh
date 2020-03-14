@@ -7,7 +7,10 @@ sed -ri -e "s/^upload_max_filesize.*/upload_max_filesize = ${PHP_UPLOAD_MAX_FILE
 if [[ ! -d $VOLUME_HOME/mysql ]]; then
     echo "=> An empty or uninitialized MySQL volume is detected in $VOLUME_HOME"
     echo "=> Installing MySQL ..."
-    mysql_install_db > /dev/null 2>&1
+    chown mysql:mysql /var/lib/mysql
+    chmod 750 /var/lib/mysql
+    cd /var/lib/mysql
+    mysqld --initialize-insecure --user mysql > /dev/null 2>&1
     echo "=> Done!"  
     /create_mysql_admin_user.sh
 else
