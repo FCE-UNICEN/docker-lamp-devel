@@ -23,6 +23,8 @@ ADD mysql/init-db.sh /init-db.sh
 # Add Pasquino Install utils
 ADD pasquino/get-pasquino.sh /init-pasquino.sh
 
+# Add Pasquino app getter
+ADD pasquino/get-app.sh /get-app.sh
 
 RUN chmod 755 /*.sh
 
@@ -46,5 +48,6 @@ RUN dpkg-reconfigure locales
 #Configure PHP.ini
 RUN /configure-php.sh
 
-EXPOSE 80 3306
+EXPOSE 80
+WORKDIR /var/www/app
 CMD ["/run.sh"]
