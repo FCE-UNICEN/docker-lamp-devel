@@ -6,8 +6,7 @@ sed -ri -e "s/^upload_max_filesize.*/upload_max_filesize = ${PHP_UPLOAD_MAX_FILE
 echo "=> Installing or updating pasquino"
 /init-pasquino.sh
 
-echo "=> Getting or updating the App"
-/get-app.sh
-
+echo "=> Getting or updating the App and initializing"
+/init-app.sh
 
 exec supervisord -n

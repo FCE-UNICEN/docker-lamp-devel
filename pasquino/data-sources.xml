@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE data-sources PUBLIC "-//FCEunicen//DTD Config//ES" "http://apps.econ.unicen.edu.ar/public/dtd/config.dtd" >
+<data-sources default="asistencia">
+    <data-source name="asistencia" dbms="mysqli" host="mysql" db-name="genioald_asistencia" username="root" password="pqn_aladinus" />
+    <data-source name="asistenciaUpd" dbms="mysqli" host="mysql" db-name="genioald_asistencia" username="root" password="pqn_aladinus" />
+</data-sources>
