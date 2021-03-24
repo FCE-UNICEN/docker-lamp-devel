@@ -24,6 +24,7 @@ RUN chmod 755 /*.sh
 
 RUN ssh-keygen -b 2048 -t rsa -f /root/.ssh/id_rsa -q -N ""
 RUN cat /root/.ssh/id_rsa.pub
+COPY pasquino/ssh-config /root/.ssh/config
 
 # config to enable .htaccess
 ADD apache/default.conf /etc/apache2/sites-available/000-default.conf

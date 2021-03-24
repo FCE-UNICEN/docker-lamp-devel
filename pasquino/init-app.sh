@@ -14,7 +14,7 @@ else
 	git remote add origin $appRemote
 	git fetch
 	git reset $branch
-	git checkout -t $branch
+	git checkout -b $branch origin/$branch
 	#git clone $appRemote -b $branch .
 fi
 
