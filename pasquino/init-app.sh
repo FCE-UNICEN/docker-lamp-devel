@@ -3,7 +3,7 @@ appDir=/var/www/app
 appRemote=git@gitlab.com:asivas/asistencia-aladinuus.git
 branch=ecuador/master
 
-if [ -d "{$appDir}/.git" ]; then
+if [ -d "${appDir}/.git" ]; then
 	cd $appDir
 	git pull
 else
@@ -19,4 +19,5 @@ else
 fi
 
 cd $appDir
+chmod a+w tmp/
 composer update
