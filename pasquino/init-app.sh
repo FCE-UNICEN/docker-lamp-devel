@@ -1,7 +1,7 @@
 #!/bin/bash
 appDir=/var/www/app
-appRemote=git@gitlab.com:asivas/asistencia-aladinuus.git
-branch=ecuador/master
+appRemote=git@gitlab.com:asivas/lucasincClinica.git
+branch=release
 
 if [ -d "${appDir}/.git" ]; then
 	cd $appDir
