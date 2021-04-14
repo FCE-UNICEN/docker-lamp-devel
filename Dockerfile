@@ -1,5 +1,5 @@
 FROM ubuntu:trusty
-MAINTAINER Lucas Vidaguren <lucas.vidaguren@asivas.com.ar>
+LABEL mantainer="Lucas Vidaguren <lucas.vidaguren@asivas.com.ar>"
 
 # Install packages
 RUN apt-get update
