@@ -47,6 +47,9 @@ RUN locale-gen en_US en_US.UTF-8
 RUN locale-gen es_AR es_AR.UTF-8
 RUN dpkg-reconfigure locales
 
+# Timezone
+RUN DEBIAN_FRONTEND="noninteractive" apt-get -y install tzdata
+
 COPY pasquino/data-sources.xml /var/www/app/conf/data-sources.xml
 
 #Configure PHP.ini
