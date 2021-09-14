@@ -81,6 +81,8 @@ RUN /configure-php.sh
 ADD pasquino/init-pear.sh /init-pear.sh
 RUN /init-pear.sh
 
+RUN /init-pasquino.sh
+
 # Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 

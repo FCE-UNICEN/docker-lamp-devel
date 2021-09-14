@@ -1,5 +1,5 @@
 #!/bin/bash
-source .env.app
+source .env
 
 if [ -d "${appDir}/.git" ]; then
 	cd $appDir
