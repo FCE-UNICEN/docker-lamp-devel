@@ -3,7 +3,27 @@ LABEL mantainer="Lucas Vidaguren <lucas.vidaguren@asivas.com.ar>"
 
 # Install packages
 RUN apt-get update
-RUN apt-get -y install supervisor apache2 libapache2-mod-php5 php5-mysql pwgen php5-mcrypt php5-gd php5-curl php5-xmlrpc php5-intl curl php5-xdebug git vim
+RUN apt-get -y install \
+               supervisor \
+               apache2 \
+               pwgen \
+               libapache2-mod-php5
+
+RUN apt-get -y install \
+               php5-mysql \
+               php5-mcrypt \
+               php5-gd \
+               php5-curl \
+               php5-xmlrpc \
+               php5-intl \
+               php5-tidy
+
+RUN apt-get -y install php5-xdebug
+
+RUN apt-get -y install \
+               curl \
+               git \
+               vim
 
 # Add image configuration and scripts
 ADD apache/start-apache2.sh /start-apache2.sh
