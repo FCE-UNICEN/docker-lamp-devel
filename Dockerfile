@@ -39,6 +39,9 @@ ADD pasquino/get-pasquino.sh /init-pasquino.sh
 
 # Add Pasquino app getter
 ADD pasquino/init-app.sh /init-app.sh
+ENV workdir=/var/www/app
+ADD pasquino/.env.app ${workdir}/.env
+
 
 RUN chmod 755 /*.sh
 
@@ -82,5 +85,5 @@ RUN /init-pear.sh
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 EXPOSE 80
-WORKDIR /var/www/app
+WORKDIR ${workdir}
 CMD ["/run.sh"]
