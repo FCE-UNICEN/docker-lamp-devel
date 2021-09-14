@@ -1,7 +1,5 @@
 #!/bin/bash
-appDir=/var/www/app
-appRemote=git@gitlab.com:asivas/lucasincClinica.git
-branch=release
+source .env.app
 
 if [ -d "${appDir}/.git" ]; then
 	cd $appDir
