@@ -2,5 +2,5 @@
 <!DOCTYPE data-sources PUBLIC "-//FCEunicen//DTD Config//ES" "http://apps.econ.unicen.edu.ar/public/dtd/config.dtd" >
 <data-sources default="liclinica">
     <data-source name="lilinica" dbms="mysqli" host="mysql" db-name="liclinica" username="root" password="pqn_liclinica" />
-    <data-source name="liclinicaUpd" dbms="mysqli" host="mysql" db-name="liclinica" username="root" password="pqn_liclinica />
+    <data-source name="liclinicaUpd" dbms="mysqli" host="mysql" db-name="liclinica" username="root" password="pqn_liclinica" />
 </data-sources>
