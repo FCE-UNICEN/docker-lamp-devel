@@ -2,7 +2,7 @@ FROM ubuntu:trusty
 LABEL mantainer="Lucas Vidaguren <lucas.vidaguren@asivas.com.ar>"
 
 # Install packages
-RUN apt-get -qq --allow-releaseinfo-change update
+RUN apt-get -qq update
 RUN apt-get -y install \
                supervisor \
                apache2 \
