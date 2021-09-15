@@ -1,5 +1,5 @@
 #!/bin/bash
-source .env
+[ -f ".env" ] && source .env
 
 # if appDir was set on .env change dir to appDir otherwise
 # we should be on $workdir set on Dockerfile
@@ -8,7 +8,7 @@ if [ -z "${appDir}" ]; then
 	cd $appDir
 fi
 
-if [ -d "${appDir}/.git" ]; then
+if [ -d ".git" ]; then
 	git pull
 else
   if [ -n "$appRemote" ]; then
