@@ -25,40 +25,11 @@ RUN apt-get -y install \
                git \
                vim
 
-# Add image configuration and scripts
-ADD apache/start-apache2.sh /start-apache2.sh
-ADD apache/configure-php.sh /configure-php.sh
-
-ADD run.sh /run.sh
-RUN chmod 755 /*.sh
-
-ADD apache/supervisord-apache2.conf /etc/supervisor/conf.d/supervisord-apache2.conf
-
-# Add Pasquino Install utils
-ADD pasquino/get-pasquino.sh /init-pasquino.sh
-
-# Add Pasquino app getter
-ADD pasquino/init-app.sh /init-app.sh
-ENV workdir=/var/www/app
-ADD pasquino/.env.app ${workdir}/.env
-
-
 RUN chmod 755 /*.sh
 
 RUN ssh-keygen -b 2048 -t rsa -f /root/.ssh/id_rsa -q -N ""
 RUN cat /root/.ssh/id_rsa.pub
 COPY pasquino/ssh-config /root/.ssh/config
-
-# config to enable .htaccess
-ADD apache/default.conf /etc/apache2/sites-available/000-default.conf
-ADD apache/default-ssl.conf /etc/apache2/sites-available/default-ssl.conf
-ADD apache/ports.conf /etc/apache2/ports.conf
-RUN a2enmod rewrite
-RUN a2enmod ssl
-
-#Enviornment variables to configure php
-ENV PHP_UPLOAD_MAX_FILESIZE 20M
-ENV PHP_POST_MAX_SIZE 20M
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php
@@ -73,12 +44,43 @@ RUN dpkg-reconfigure locales
 # Timezone
 RUN DEBIAN_FRONTEND="noninteractive" apt-get -y install tzdata
 
+# Add image configuration and scripts
+ADD apache/start-apache2.sh /start-apache2.sh
+ADD apache/configure-php.sh /configure-php.sh
+
+ADD run.sh /run.sh
+
+ADD apache/supervisord-apache2.conf /etc/supervisor/conf.d/supervisord-apache2.conf
+
+# Add Pasquino Install utils
+ADD pasquino/get-pasquino.sh /init-pasquino.sh
+
+# Add Pasquino app getter
+ADD pasquino/init-app.sh /init-app.sh
+ENV workdir=/var/www/app
+ADD pasquino/.env.app ${workdir}/.env
+
+ADD pasquino/init-pear.sh /init-pear.sh
+
+
+# config to enable .htaccess
+ADD apache/default.conf /etc/apache2/sites-available/000-default.conf
+ADD apache/default-ssl.conf /etc/apache2/sites-available/default-ssl.conf
+ADD apache/ports.conf /etc/apache2/ports.conf
+RUN a2enmod rewrite
+RUN a2enmod ssl
+
+#Enviornment variables to configure php
+ENV PHP_UPLOAD_MAX_FILESIZE 20M
+ENV PHP_POST_MAX_SIZE 20M
+
 COPY pasquino/data-sources.xml /var/www/app/conf/data-sources.xml
+
+RUN chmod 755 /*.sh
 
 #Configure PHP.ini
 RUN /configure-php.sh
 
-ADD pasquino/init-pear.sh /init-pear.sh
 RUN /init-pear.sh
 
 RUN /init-pasquino.sh
