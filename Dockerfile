@@ -2,7 +2,7 @@ FROM ubuntu:trusty
 LABEL mantainer="Lucas Vidaguren <lucas.vidaguren@asivas.com.ar>"
 
 # Install packages
-RUN apt-get update
+RUN apt-get -qq --allow-releaseinfo-change update
 RUN apt-get -y install \
                supervisor \
                apache2 \
@@ -25,8 +25,6 @@ RUN apt-get -y install \
                git \
                vim
 
-RUN chmod 755 /*.sh
-
 RUN ssh-keygen -b 2048 -t rsa -f /root/.ssh/id_rsa -q -N ""
 RUN cat /root/.ssh/id_rsa.pub
 COPY pasquino/ssh-config /root/.ssh/config
@@ -44,6 +42,10 @@ RUN dpkg-reconfigure locales
 # Timezone
 RUN DEBIAN_FRONTEND="noninteractive" apt-get -y install tzdata
 
+ADD pasquino/init-pear.sh /init-pear.sh
+RUN /init-pear.sh
+
+
 # Add image configuration and scripts
 ADD apache/start-apache2.sh /start-apache2.sh
 ADD apache/configure-php.sh /configure-php.sh
@@ -59,9 +61,6 @@ ADD pasquino/get-pasquino.sh /init-pasquino.sh
 ADD pasquino/init-app.sh /init-app.sh
 ENV workdir=/var/www/app
 ADD pasquino/.env.app ${workdir}/.env
-
-ADD pasquino/init-pear.sh /init-pear.sh
-
 
 # config to enable .htaccess
 ADD apache/default.conf /etc/apache2/sites-available/000-default.conf
@@ -80,8 +79,6 @@ RUN chmod 755 /*.sh
 
 #Configure PHP.ini
 RUN /configure-php.sh
-
-RUN /init-pear.sh
 
 RUN /init-pasquino.sh
 
