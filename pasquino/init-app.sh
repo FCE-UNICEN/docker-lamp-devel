@@ -3,12 +3,12 @@
 
 # if appDir was set on .env change dir to appDir otherwise
 # we should be on $workdir set on Dockerfile
-if [ -z "${appDir}" ]; then
+if [ -n "${appDir}" ]; then
 	mkdir -p $appDir
 	cd $appDir
 fi
 
-if [ -d ".git" ]; then
+if [ -d "$(pwd)/.git" ]; then
 	git pull
 else
   if [ -n "$appRemote" ]; then

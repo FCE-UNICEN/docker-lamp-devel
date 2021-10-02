@@ -5,7 +5,7 @@ PHP_MODS_DIR=/etc/php5/mods-available
 
 echo "[xdebug]" >> xdebug.ini
 echo "xdebug.remote_enable = 1" >> ${PHP_MODS_DIR}/xdebug.ini
-echo "xdebug.remote_port = 9000" >> ${PHP_MODS_DIR}/xdebug.ini
+echo "xdebug.remote_port = 9001" >> ${PHP_MODS_DIR}/xdebug.ini
 echo "xdebug.remote_connect_back =1" >> ${PHP_MODS_DIR}/xdebug.ini
 
 #otra opción sería ir a php.ini
