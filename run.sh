@@ -1,7 +1,9 @@
 #!/bin/bash
 
 sed -ri -e "s/^upload_max_filesize.*/upload_max_filesize = ${PHP_UPLOAD_MAX_FILESIZE}/" \
-    -e "s/^post_max_size.*/post_max_size = ${PHP_POST_MAX_SIZE}/" /etc/php5/apache2/php.ini
+    -e "s/^post_max_size.*/post_max_size = ${PHP_POST_MAX_SIZE}/" \
+    -e "s/^memory_limit = .*/memory_limit = ${PHP_MEMORY_LIMT}/" \
+    -e "s/^error_reporting = .*/error_reporting = ${PHP_ERROR_REPORTING}/" /etc/php5/apache2/php.ini
 
 echo "=> Installing or updating pasquino"
 /init-pasquino.sh

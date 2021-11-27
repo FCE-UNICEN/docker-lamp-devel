@@ -15,5 +15,10 @@ echo "xdebug.remote_connect_back =1" >> ${PHP_MODS_DIR}/xdebug.ini
 # Quitado para entorno productivo (menos eficiente y tal vez pueda introducir algun riesgo)
 #php5enmod xdebug
 
+
+sed -i "s~^\;date.timezone =\s*$~date.timezone \= ${timezone}~g" /etc/php5/apache2/php.ini
+sed -i "s~^\;date.timezone =\s*$~date.timezone \= ${timezone}~g" /etc/php5/cli/php.ini
+
+
 # Default charset de apache
 sed -i '/^#AddDefaultCharset UTF-8/s/^#//' /etc/apache2/conf-enabled/charset.conf
