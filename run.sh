@@ -1,9 +1,11 @@
 #!/bin/bash
 
+ESCAPED_PHP_ERROR_REPORTING=$(printf '%s\n' "${PHP_ERROR_REPORTING}" | sed -e 's/[\/&]/\\&/g')
+
 sed -ri -e "s/^upload_max_filesize.*/upload_max_filesize = ${PHP_UPLOAD_MAX_FILESIZE}/" \
     -e "s/^post_max_size.*/post_max_size = ${PHP_POST_MAX_SIZE}/" \
     -e "s/^memory_limit = .*/memory_limit = ${PHP_MEMORY_LIMT}/" \
-    -e "s/^error_reporting = .*/error_reporting = ${PHP_ERROR_REPORTING}/" /etc/php5/apache2/php.ini
+    -e "s/^error_reporting = .*/error_reporting = ${ESCAPED_PHP_ERROR_REPORTING}/" /etc/php5/apache2/php.ini
 
 /configure-cups.sh
 
