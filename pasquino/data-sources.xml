@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE data-sources PUBLIC "-//FCEunicen//DTD Config//ES" "http://apps.econ.unicen.edu.ar/public/dtd/config.dtd" >
+<data-sources default="default">
+    <data-source name="default" dbms="mysqli" host="mysql" db-name="" username="user" password="" />
+    <data-source name="default-updater" dbms="mysqli" host="mysql" db-name="" username="root" password="" />
+</data-sources>

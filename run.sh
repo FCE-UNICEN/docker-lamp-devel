@@ -1,25 +1,18 @@
 #!/bin/bash
 
-VOLUME_HOME="/var/lib/mysql"
+ESCAPED_PHP_ERROR_REPORTING=$(printf '%s\n' "${PHP_ERROR_REPORTING}" | sed -e 's/[\/&]/\\&/g')
 
 sed -ri -e "s/^upload_max_filesize.*/upload_max_filesize = ${PHP_UPLOAD_MAX_FILESIZE}/" \
-    -e "s/^post_max_size.*/post_max_size = ${PHP_POST_MAX_SIZE}/" /etc/php5/apache2/php.ini
-if [[ ! -d $VOLUME_HOME/mysql ]]; then
-    echo "=> An empty or uninitialized MySQL volume is detected in $VOLUME_HOME"
-    echo "=> Installing MySQL ..."
-    mysql_install_db > /dev/null 2>&1
-    echo "=> Done!"  
-    /create_mysql_admin_user.sh
-else
-    echo "=> Using an existing volume of MySQL"
-fi
+    -e "s/^post_max_size.*/post_max_size = ${PHP_POST_MAX_SIZE}/" \
+    -e "s/^memory_limit = .*/memory_limit = ${PHP_MEMORY_LIMT}/" \
+    -e "s/^error_reporting = .*/error_reporting = ${ESCAPED_PHP_ERROR_REPORTING}/" /etc/php5/apache2/php.ini
+
+/configure-cups.sh
 
 echo "=> Installing or updating pasquino"
 /init-pasquino.sh
 
-if [[ -f /var/www/app/init.sql ]]; then
-	/init-db.sh
-fi
-
+echo "=> Getting or updating the App and initializing"
+/init-app.sh
 
 exec supervisord -n
