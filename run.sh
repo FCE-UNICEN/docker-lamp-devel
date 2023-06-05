@@ -7,8 +7,6 @@ sed -ri -e "s/^upload_max_filesize.*/upload_max_filesize = ${PHP_UPLOAD_MAX_FILE
     -e "s/^memory_limit = .*/memory_limit = ${PHP_MEMORY_LIMT}/" \
     -e "s/^error_reporting = .*/error_reporting = ${ESCAPED_PHP_ERROR_REPORTING}/" /etc/php5/apache2/php.ini
 
-/configure-cups.sh
-
 echo "=> Installing or updating pasquino"
 /init-pasquino.sh
 
