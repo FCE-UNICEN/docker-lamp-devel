@@ -23,4 +23,3 @@ sed -i "s~^\;date.timezone =\s*$~date.timezone \= ${timezone}~g" /etc/php5/cli/p
 
 # Default charset de apache
 sed -i '/^#AddDefaultCharset UTF-8/s/^#//' /etc/apache2/conf-enabled/charset.conf
-}

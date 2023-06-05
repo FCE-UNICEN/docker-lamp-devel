@@ -3,10 +3,10 @@ which pear > /dev/null 2>&1
 # si no existe intalamos via apt-get
 if [ $? -ne 0 ]; then
 	echo "Pear is required, installing pear"
-	apt-get update && apt-get -y install php-pear 
-	pear channel-update pear.php.net > /dev/null
+	apt-get update && apt-get -y install php-pear
 fi
-pear -q install -f PEAR-1.10.1
+pear channel-update pear.php.net > /dev/null
+#pear -q install -f PEAR-1.10.13
 pear -q install -f Archive_Tar 
 pear -q install -f Auth Auth_SASL 
 pear -q install -f Console_Getopt DB File HTML_Common HTML_QuickForm 
