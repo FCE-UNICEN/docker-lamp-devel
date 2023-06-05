@@ -135,6 +135,7 @@ COPY pasquino/data-sources.xml /var/www/app/conf/data-sources.xml
 
 # Add Pasquino app getter
 ADD pasquino/init-app.sh /init-app.sh
+COPY configure-cups.sh /configure-cups.sh
 
 RUN chmod 755 /*.sh
 
@@ -143,11 +144,14 @@ ENV newrelic_licence_key "5a0fab99b64e53e50c6168b8a7cf2f25e1bbNRAL"
 
 RUN echo newrelic-php5 newrelic-php5/application-name string "${newrelic_application_name}" | debconf-set-selections && \
     echo newrelic-php5 newrelic-php5/license-key string "${newrelic_licence_key}" | debconf-set-selections \
-    && \ dpkg-reconfigure --frontend noninteractive newrelic-php5
+    && dpkg-reconfigure --frontend noninteractive newrelic-php5
 
-RUN DEBIAN_FRONTEND=noninteractive apt install -y cifs-utils cups-client
+RUN apt-get -qq update && DEBIAN_FRONTEND=noninteractive apt install -y cifs-utils cups-client
 
 ENV CUPS_SERVER "192.168.82.14:631"
 ENV CUPS_USER "lucas"
 
-COPY configure-cups.sh /configure-cups.sh
+
+
+# Clear cache
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
