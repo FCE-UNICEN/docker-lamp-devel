@@ -55,8 +55,6 @@ RUN echo "deb http://apt.newrelic.com/debian/ newrelic non-free" > /etc/apt/sour
 #RUN ln -s /usr/lib/newrelic-php5/agent/x64/newrelic-20131226-zts.so /usr/lib/php5/20131226-zts/newrelic.so
 RUN phpenmod newrelic
 
-#RUN DEBIAN_FRONTEND=noninteractive apt install -y cifs-utils cups-client
-
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php
 RUN mv composer.phar /usr/bin/composer
@@ -147,5 +145,9 @@ RUN echo newrelic-php5 newrelic-php5/application-name string "${newrelic_applica
     echo newrelic-php5 newrelic-php5/license-key string "${newrelic_licence_key}" | debconf-set-selections \
     && \ dpkg-reconfigure --frontend noninteractive newrelic-php5
 
-#ENV CUPS_SERVER "192.168.82.14:631"
-#ENV CUPS_USER "lucas"
+RUN DEBIAN_FRONTEND=noninteractive apt install -y cifs-utils cups-client
+
+ENV CUPS_SERVER "192.168.82.14:631"
+ENV CUPS_USER "lucas"
+
+COPY configure-cups.sh /configure-cups.sh

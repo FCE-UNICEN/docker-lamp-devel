@@ -1,3 +1,3 @@
 appDir=/var/www/app
-appRemote=
-branch=
+appRemote=git@gitlab.com:asivas/clients/demartino/lucasincClinica.git
+branch=release
