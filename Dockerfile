@@ -31,15 +31,19 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -y -qq install \
                pwgen
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y -qq install \
-               php5.6-mysql \
-               php5.6-mcrypt \
-               php5.6-gd \
-               php5.6-curl \
-               php5.6-xmlrpc \
-               php5.6-intl \
-               php5.6-tidy \
-               php5.6-dev \
-               php-gettext
+   php5.6-mysql \
+   php5.6-mcrypt \
+   php5.6-gd \
+   php5.6-curl \
+   php5.6-xmlrpc \
+   php5.6-intl \
+   php5.6-tidy \
+   php5.6-zip \
+   php5.6-dev \
+   php5.6-common \
+   php5.6-xml \
+   libapache2-mod-php5.6 \
+   php-gettext
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y install php5.6-xdebug
 
@@ -56,6 +60,7 @@ RUN phpenmod newrelic
 
 #RUN DEBIAN_FRONTEND=noninteractive apt install -y cifs-utils cups-client
 
+RUN ln -sfn /usr/bin/php5.6 /etc/alternatives/php
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php
 RUN mv composer.phar /usr/bin/composer
@@ -106,10 +111,17 @@ CMD ["/run.sh"]
 #FROM pthreads as with-pear
 FROM apache-php56 as with-pear
 
+RUN apt-get -qq update
+
+RUN apt-get -qq -y remove php-pear && apt-get -qq -y autoremove
 ADD pasquino/init-pear.sh /init-pear.sh
 
+RUN apt-get -qq -y install php-pear
+
 RUN chmod 755 /*.sh
-RUN /init-pear.sh
+#RUN /init-pear.sh get-pasquino will ensure the modules on install.sh
+
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 FROM with-pear as pasquino
 # Add Pasquino Install utils
@@ -126,20 +138,4 @@ RUN /init-pasquino.sh
 
 RUN git config --global --add safe.directory ${workdir}
 
-FROM pasquino as app
 
-ADD pasquino/.env.app ${workdir}/.env
-
-COPY pasquino/data-sources.xml /var/www/app/conf/data-sources.xml
-
-ENV newrelic_application_name "LiClinica"
-ENV newrelic_licence_key "5a0fab99b64e53e50c6168b8a7cf2f25e1bbNRAL"
-
-RUN echo newrelic-php5 newrelic-php5/application-name string "${newrelic_application_name}" | debconf-set-selections && \
-    echo newrelic-php5 newrelic-php5/license-key string "${newrelic_licence_key}" | debconf-set-selections \
-    && \ dpkg-reconfigure --frontend noninteractive newrelic-php5
-
-RUN /init-app.sh
-
-#ENV CUPS_SERVER "192.168.82.14:631"
-#ENV CUPS_USER "lucas"

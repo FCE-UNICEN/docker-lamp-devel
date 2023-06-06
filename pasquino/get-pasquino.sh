@@ -6,6 +6,6 @@ if [ -d "$pQnDir" ]; then
 else
 	mkdir -p $pQnDir
 	cd $pQnDir
-	git clone https://github.com/asivas/pasquino.git -b 1.7.x .
-	./install.sh -y
+	git clone https://github.com/asivas/pasquino.git -b v2.1 .
+	pQnIncludepathIniDir=/etc/php/5.6/mods-available ./install.sh -y
 fi
