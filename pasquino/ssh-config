@@ -1,2 +1,5 @@
 Host gitlab.com 
     StrictHostKeyChecking no
+
+Host git.econ.unicen.edu.ar
+    StrictHostKeyChecking no
