@@ -1,7 +1,7 @@
 #!/bin/bash
 echo "    => Adding xdebug config"
 
-PHP_MODS_DIR=/etc/php5/mods-available
+PHP_MODS_DIR=/etc/php/5.6/mods-available
 
 {
   echo "[xdebug]"
@@ -15,10 +15,10 @@ PHP_MODS_DIR=/etc/php5/mods-available
 #mv -f /etc/php5/apache2/php.ini.xdebug  /etc/php5/apache2/php.ini
 
 # Quitado para entorno productivo (menos eficiente y tal vez pueda introducir algun riesgo)
-#php5enmod xdebug
+phpdismod -v 5.6 xdebug
 
-sed -i "s~^\;date.timezone =\s*$~date.timezone \= ${timezone}~g" /etc/php5/apache2/php.ini
-sed -i "s~^\;date.timezone =\s*$~date.timezone \= ${timezone}~g" /etc/php5/cli/php.ini
+sed -i "s~^\;date.timezone =\s*$~date.timezone \= ${timezone}~g" /etc/php/5.6/apache2/php.ini
+sed -i "s~^\;date.timezone =\s*$~date.timezone \= ${timezone}~g" /etc/php/5.6/cli/php.ini
 
 
 # Default charset de apache

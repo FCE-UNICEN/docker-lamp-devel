@@ -91,7 +91,7 @@ RUN a2enmod ssl
 #Enviornment variables to configure php
 ENV PHP_UPLOAD_MAX_FILESIZE 20M
 ENV PHP_POST_MAX_SIZE 20M
-ENV PHP_MEMORY_LIMT 2048M
+ENV PHP_MEMORY_LIMT 256M
 ENV PHP_ERROR_REPORTING "E_ALL & ~E_DEPRECATED & ~E_STRICT & ~E_NOTICE"
 
 RUN chmod 755 /*.sh
@@ -138,4 +138,6 @@ RUN /init-pasquino.sh
 
 RUN git config --global --add safe.directory ${workdir}
 
-
+# Hardening de PHP (capa final)
+COPY php/99-hardening.ini /etc/php/5.6/apache2/conf.d/99-hardening.ini
+COPY php/99-hardening.ini /etc/php/5.6/cli/conf.d/99-hardening.ini

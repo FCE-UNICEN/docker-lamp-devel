@@ -1,0 +1,12 @@
+# Hardening de PHP sobre la imagen publicada (el PPA ondrej/php ya no publica
+# php5.6 para bionic, por lo que el Dockerfile principal no puede reconstruirse)
+FROM asivas/pasquino@sha256:cfc79cd69a25e0bb72c211cf57cc256e7892be68899c8ff2c5f0bae5a4f1e8a1
+
+ENV PHP_MEMORY_LIMT 256M
+
+ADD apache/configure-php.sh /configure-php.sh
+ADD run.sh /run.sh
+RUN chmod 755 /*.sh && /configure-php.sh
+
+COPY php/99-hardening.ini /etc/php/5.6/apache2/conf.d/99-hardening.ini
+COPY php/99-hardening.ini /etc/php/5.6/cli/conf.d/99-hardening.ini
