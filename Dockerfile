@@ -1,4 +1,5 @@
-FROM ubuntu:bionic as apache-php56
+# ondrej/php ya no publica php5.6 para bionic/focal; jammy sí
+FROM ubuntu:jammy as apache-php56
 LABEL mantainer="Lucas Vidaguren <lucas.vidaguren@asivas.com.ar>"
 
 # Install packages
@@ -43,15 +44,15 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -y -qq install \
    php5.6-common \
    php5.6-xml \
    libapache2-mod-php5.6 \
-   php-gettext
+   php-php-gettext
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y install php5.6-xdebug
 
 
 RUN curl https://download.newrelic.com/548C16BF.gpg | apt-key add -
-RUN echo "deb http://apt.newrelic.com/debian/ newrelic non-free" > /etc/apt/sources.list.d/newrelic.list && \
+RUN echo "deb https://apt.newrelic.com/debian/ newrelic non-free" > /etc/apt/sources.list.d/newrelic.list && \
     apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get -y install newrelic-php5
+    DEBIAN_FRONTEND=noninteractive apt-get -y install newrelic-php5=10.10.0.1 newrelic-php5-common=10.10.0.1 newrelic-daemon=10.10.0.1
 
 
 #Aplico new relic post instalación
